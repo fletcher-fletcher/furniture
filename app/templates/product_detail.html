@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} — Мебельный магазин "Уют"{% endblock %}
+
+{% block content %}
+
+<section class="product-detail-section py-5">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Главная</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('catalog') }}">Каталог</a></li>
+                {% if product.category %}
+                <li class="breadcrumb-item"><a href="{{ url_for('catalog', slug=product.category.slug) }}">{{ product.category.name }}</a></li>
+                {% endif %}
+                <li class="breadcrumb-item active">{{ product.name }}</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <!-- Изображение товара -->
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="product-main-image">
+                        {% if product.image %}
+                        <img src="{{ url_for('static', filename='images/products/' + product.image) }}" class="card-img-top" alt="{{ product.name }}" style="max-height: 500px; object-fit: cover;">
+                        {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 500px;">
+                            <i class="bi bi-image display-1 text-muted"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Информация о товаре -->
+            <div class="col-lg-6">
+                <h1 class="mb-3">{{ product.name }}</h1>
+                
+                <div class="mb-3">
+                    <span class="h2 text-primary">{{ "%.0f"|format(product.price) }} ₽</span>
+                    {% if product.old_price %}
+                    <span class="h4 text-muted text-decoration-line-through ms-2">{{ "%.0f"|format(product.old_price) }} ₽</span>
+                    <span class="badge bg-danger ms-2">Экономия {{ "%.0f"|format(product.old_price - product.price) }} ₽</span>
+                    {% endif %}
+                </div>
+
+                {% if product.stock > 0 %}
+                <p class="text-success"><i class="bi bi-check-circle me-2"></i>В наличии: {{ product.stock }} шт.</p>
+                {% else %}
+                <p class="text-danger"><i class="bi bi-x-circle me-2"></i>Нет в наличии</p>
+                {% endif %}
+
+                <hr>
+
+                <p class="lead">{{ product.description }}</p>
+
+                <div class="product-specs mb-4">
+                    <h5>Характеристики</h5>
+                    <table class="table table-striped">
+                        {% if product.material %}
+                        <tr>
+                            <td><strong>Материал</strong></td>
+                            <td>{{ product.material }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if product.dimensions %}
+                        <tr>
+                            <td><strong>Размеры</strong></td>
+                            <td>{{ product.dimensions }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if product.color %}
+                        <tr>
+                            <td><strong>Цвет</strong></td>
+                            <td>{{ product.color }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if product.weight %}
+                        <tr>
+                            <td><strong>Вес</strong></td>
+                            <td>{{ product.weight }} кг</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td><strong>Артикул</strong></td>
+                            <td>{{ product.id|string|format("%06d") }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                {% if product.stock > 0 %}
+                <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="post" class="mb-4">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="quantity" class="form-label fw-bold">Количество:</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" max="{{ product.stock }}" style="width: 80px;">
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-cart-plus me-2"></i>Добавить в корзину</button>
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+
+                <div class="d-flex gap-3">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-truck text-primary fs-4 me-2"></i>
+                        <div>
+                            <small class="d-block fw-bold">Доставка</small>
+                            <small class="text-muted">1-3 дня по Москве</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-shield-check text-primary fs-4 me-2"></i>
+                        <div>
+                            <small class="d-block fw-bold">Гарантия</small>
+                            <small class="text-muted">2 года</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-arrow-counterclockwise text-primary fs-4 me-2"></i>
+                        <div>
+                            <small class="d-block fw-bold">Возврат</small>
+                            <small class="text-muted">14 дней</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Отзывы -->
+        <div class="row mt-5">
+            <div class="col-lg-8">
+                <h3 class="mb-4">Отзывы ({{ reviews|length }})</h3>
+                
+                {% if reviews %}
+                <div class="reviews-list">
+                    {% for review in reviews %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="d-flex align-items-center">
+                                    <div class="review-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                        {{ review.user_name[0] }}
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">{{ review.user_name }}</h6>
+                                        <small class="text-muted">{{ review.created_at.strftime('%d.%m.%Y') }}</small>
+                                    </div>
+                                </div>
+                                <div class="text-warning">
+                                    {% for i in range(review.rating) %}
+                                    <i class="bi bi-star-fill"></i>
+                                    {% endfor %}
+                                    {% for i in range(5 - review.rating) %}
+                                    <i class="bi bi-star"></i>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <p class="card-text mt-3">{{ review.text }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>Пока нет отзывов. Будьте первым!
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Написать отзыв</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{{ url_for('add_review', product_id=product.id) }}">
+                            {{ review_form.hidden_tag() }}
+                            <div class="mb-3">
+                                {{ review_form.user_name.label(class="form-label") }}
+                                {{ review_form.user_name(class="form-control") }}
+                                {% if review_form.user_name.errors %}
+                                <div class="text-danger small">{{ review_form.user_name.errors[0] }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="mb-3">
+                                {{ review_form.rating.label(class="form-label") }}
+                                {{ review_form.rating(class="form-select") }}
+                            </div>
+                            <div class="mb-3">
+                                {{ review_form.text.label(class="form-label") }}
+                                {{ review_form.text(class="form-control", rows=4) }}
+                                {% if review_form.text.errors %}
+                                <div class="text-danger small">{{ review_form.text.errors[0] }}</div>
+                                {% endif %}
+                            </div>
+                            {{ review_form.submit(class="btn btn-primary w-100") }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Похожие товары -->
+        {% if related_products %}
+        <div class="row mt-5">
+            <div class="col-12">
+                <h3 class="mb-4">Похожие товары</h3>
+                <div class="row g-4">
+                    {% for related in related_products %}
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card product-card h-100">
+                            <div class="product-image-wrapper">
+                                {% if related.image %}
+                                <img src="{{ url_for('static', filename='images/products/' + related.image) }}" class="card-img-top product-image" alt="{{ related.name }}">
+                                {% else %}
+                                <div class="bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
+                                    <i class="bi bi-image display-4 text-muted"></i>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-title">{{ related.name }}</h6>
+                                <p class="card-text text-primary fw-bold">{{ "%.0f"|format(related.price) }} ₽</p>
+                                <a href="{{ url_for('product_detail', slug=related.slug) }}" class="btn btn-outline-secondary btn-sm w-100">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

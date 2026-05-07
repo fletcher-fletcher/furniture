@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль — Мебельный магазин "Уют"{% endblock %}
+
+{% block content %}
+
+<section class="profile-section py-5">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Главная</a></li>
+                <li class="breadcrumb-item active">Профиль</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <div class="profile-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 100px; height: 100px; font-size: 40px;">
+                            {{ current_user.first_name[0] if current_user.first_name else current_user.username[0] }}
+                        </div>
+                        <h5 class="mb-1">{{ current_user.first_name }} {{ current_user.last_name }}</h5>
+                        <p class="text-muted mb-0">{{ current_user.username }}</p>
+                        <p class="text-muted">{{ current_user.email }}</p>
+                    </div>
+                </div>
+
+                <div class="list-group">
+                    <a href="{{ url_for('profile') }}" class="list-group-item list-group-item-action active">
+                        <i class="bi bi-person me-2"></i>Профиль
+                    </a>
+                    <a href="{{ url_for('orders') }}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-box-seam me-2"></i>Мои заказы
+                    </a>
+                    <a href="{{ url_for('cart') }}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-cart me-2"></i>Корзина
+                    </a>
+                    <a href="{{ url_for('logout') }}" class="list-group-item list-group-item-action text-danger">
+                        <i class="bi bi-box-arrow-right me-2"></i>Выйти
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Редактировать профиль</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            {{ form.hidden_tag() }}
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    {{ form.first_name.label(class="form-label") }}
+                                    {{ form.first_name(class="form-control", placeholder="Имя") }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    {{ form.last_name.label(class="form-label") }}
+                                    {{ form.last_name(class="form-control", placeholder="Фамилия") }}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form.email.label(class="form-label") }}
+                                {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else ""), placeholder="email@example.com") }}
+                                {% if form.email.errors %}
+                                <div class="invalid-feedback">{{ form.email.errors[0] }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form.phone.label(class="form-label") }}
+                                {{ form.phone(class="form-control", placeholder="+7 (999) 123-45-67") }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form.address.label(class="form-label") }}
+                                {{ form.address(class="form-control", rows=3, placeholder="Адрес доставки по умолчанию") }}
+                            </div>
+
+                            {{ form.submit(class="btn btn-primary") }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

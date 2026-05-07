@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Поиск: {{ query }} — Мебельный магазин "Уют"{% endblock %}
+
+{% block content %}
+
+<section class="search-section py-5">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Главная</a></li>
+                <li class="breadcrumb-item active">Поиск</li>
+            </ol>
+        </nav>
+
+        <h1 class="mb-4">Поиск: "{{ query }}"</h1>
+
+        {% if query %}
+            {% if products and products.items %}
+            <p class="text-muted mb-4">Найдено {{ products.total }} результатов</p>
+            <div class="row g-4">
+                {% for product in products.items %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card product-card h-100">
+                        <div class="product-image-wrapper">
+                            {% if product.image %}
+                            <img src="{{ url_for('static', filename='images/products/' + product.image) }}" class="card-img-top product-image" alt="{{ product.name }}">
+                            {% else %}
+                            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="bi bi-image display-4 text-muted"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text text-muted small flex-grow-1">{{ product.description[:80] if product.description else '' }}...</p>
+                            <div class="mt-auto">
+                                <span class="h5">{{ "%.0f"|format(product.price) }} ₽</span>
+                                <a href="{{ url_for('product_detail', slug=product.slug) }}" class="btn btn-outline-secondary w-100 mt-2 btn-sm">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if products.pages > 1 %}
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if products.has_prev %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('search', q=query, page=products.prev_num) }}">Предыдущая</a></li>
+                    {% endif %}
+                    {% for page_num in products.iter_pages() %}
+                        {% if page_num %}
+                            {% if page_num != products.page %}
+                            <li class="page-item"><a class="page-link" href="{{ url_for('search', q=query, page=page_num) }}">{{ page_num }}</a></li>
+                            {% else %}
+                            <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
+                            {% endif %}
+                        {% else %}
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if products.has_next %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('search', q=query, page=products.next_num) }}">Следующая</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+
+            {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-search display-1 text-muted"></i>
+                <h3 class="mt-3">Ничего не найдено</h3>
+                <p class="text-muted">Попробуйте изменить поисковый запрос</p>
+            </div>
+            {% endif %}
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-search display-1 text-muted"></i>
+            <h3 class="mt-3">Введите поисковый запрос</h3>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

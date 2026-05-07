@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Ошибка сервера — Мебельный магазин "Уют"{% endblock %}
+
+{% block content %}
+
+<section class="error-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 text-center">
+                <i class="bi bi-gear-wide-connected display-1 text-danger"></i>
+                <h1 class="display-1 fw-bold mt-4">500</h1>
+                <h2 class="mb-4">Ошибка сервера</h2>
+                <p class="lead text-muted mb-4">Произошла внутренняя ошибка сервера. Пожалуйста, попробуйте позже.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">На главную</a>
+                    <a href="{{ url_for('contacts') }}" class="btn btn-outline-secondary btn-lg">Связаться с нами</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

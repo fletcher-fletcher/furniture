@@ -1,0 +1,218 @@
+/* Основные стили */
+:root {
+    --primary-color: #4a6fa5;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Навигация */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+/* Hero секция */
+.hero-section {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+}
+
+.hero-image-wrapper {
+    position: relative;
+}
+
+/* Product Cards */
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.product-image-wrapper {
+    overflow: hidden;
+    position: relative;
+}
+
+.product-image {
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+/* Category Cards */
+.category-card {
+    transition: all 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-color: var(--primary-color);
+}
+
+.category-card:hover .card-title,
+.category-card:hover .card-text {
+    color: white !important;
+}
+
+/* Review Cards */
+.review-card {
+    transition: transform 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Feature Cards */
+.feature-card {
+    background: white;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+}
+
+footer a:hover {
+    color: var(--primary-color) !important;
+}
+
+/* Cart */
+.cart-product-image img {
+    transition: transform 0.3s ease;
+}
+
+.cart-product-image:hover img {
+    transform: scale(1.1);
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    background: none;
+    padding: 0;
+}
+
+/* Pagination */
+.pagination .page-link {
+    color: var(--primary-color);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Alerts */
+.alert {
+    border: none;
+    border-radius: 8px;
+}
+
+/* Forms */
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(74, 111, 165, 0.25);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #3d5d8a;
+    border-color: #3d5d8a;
+}
+
+/* Order Status Badges */
+.badge {
+    font-size: 0.85rem;
+    padding: 0.5em 0.75em;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 400px;
+        text-align: center;
+    }
+    
+    .hero-section .d-flex {
+        justify-content: center;
+    }
+    
+    .product-image {
+        height: 180px;
+    }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3d5d8a;
+}

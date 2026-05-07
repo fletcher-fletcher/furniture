@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Доставка и оплата — Мебельный магазин "Уют"{% endblock %}
+
+{% block content %}
+
+<section class="delivery-section py-5">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Главная</a></li>
+                <li class="breadcrumb-item active">Доставка и оплата</li>
+            </ol>
+        </nav>
+
+        <h1 class="mb-5">Доставка и оплата</h1>
+
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="card text-center h-100 border-primary">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">По Москве</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="h3 text-primary mb-3">Бесплатно</p>
+                        <p class="card-text">При заказе от 10 000 ₽</p>
+                        <p class="card-text">Срок: 1-3 рабочих дня</p>
+                        <p class="card-text">Подъём и сборка включены</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center h-100 border-info">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">По области</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="h3 text-info mb-3">500 ₽</p>
+                        <p class="card-text">При заказе от 10 000 ₽ — бесплатно</p>
+                        <p class="card-text">Срок: 2-5 рабочих дней</p>
+                        <p class="card-text">Подъём оплачивается отдельно</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center h-100 border-success">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">По России</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="h3 text-success mb-3">от 1000 ₽</p>
+                        <p class="card-text">Точная сумма при оформлении</p>
+                        <p class="card-text">Срок: 5-14 рабочих дней</p>
+                        <p class="card-text">Доставка до подъезда</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <h3 class="mb-4">Способы оплаты</h3>
+                <div class="accordion" id="paymentAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#payment1">
+                                <i class="bi bi-credit-card me-2"></i>Банковская карта онлайн
+                            </button>
+                        </h2>
+                        <div id="payment1" class="accordion-collapse collapse show" data-bs-parent="#paymentAccordion">
+                            <div class="accordion-body">
+                                Оплата Visa, Mastercard, Мир через защищённое соединение. Комиссия не взимается.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#payment2">
+                                <i class="bi bi-cash me-2"></i>Наличными при получении
+                            </button>
+                        </h2>
+                        <div id="payment2" class="accordion-collapse collapse" data-bs-parent="#paymentAccordion">
+                            <div class="accordion-body">
+                                Оплата курьеру наличными при получении заказа. Доступно для Москвы и Московской области.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#payment3">
+                                <i class="bi bi-bank me-2"></i>Банковский перевод
+                            </button>
+                        </h2>
+                        <div id="payment3" class="accordion-collapse collapse" data-bs-parent="#paymentAccordion">
+                            <div class="accordion-body">
+                                Оплата по реквизитам для юридических лиц и при заказе на сумму от 100 000 ₽.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#payment4">
+                                <i class="bi bi-calendar-check me-2"></i>Рассрочка
+                            </button>
+                        </h2>
+                        <div id="payment4" class="accordion-collapse collapse" data-bs-parent="#paymentAccordion">
+                            <div class="accordion-body">
+                                Рассрочка до 12 месяцев без переплат. Доступна при оформлении заказа от 5 000 ₽.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <h3 class="mb-4">Частые вопросы</h3>
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                Как узнать стоимость доставки?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Стоимость доставки рассчитывается автоматически при оформлении заказа. Для Москвы — бесплатно при заказе от 10 000 ₽.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                Можно ли заказать сборку?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Да! Сборка мебели включена в стоимость доставки по Москве. Для других регионов сборка оплачивается отдельно — от 1 500 ₽.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                Как отследить заказ?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                После оформления заказа вы получите номер для отслеживания. Отслеживать заказ можно в личном кабинете или через службу поддержки.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

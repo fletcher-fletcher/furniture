@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Контакты — Мебельный магазин "Уют"{% endblock %}
+
+{% block content %}
+
+<section class="contacts-section py-5">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Главная</a></li>
+                <li class="breadcrumb-item active">Контакты</li>
+            </ol>
+        </nav>
+
+        <h1 class="mb-5">Контакты</h1>
+
+        <div class="row g-5">
+            <div class="col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4"><i class="bi bi-geo-alt-fill text-primary me-2"></i>Адрес</h5>
+                        <p class="card-text">г. Москва, ул. Мебельная, 15<br>Бизнес-центр "Мебель Плаза", 3 этаж</p>
+                        
+                        <h5 class="card-title mb-4 mt-4"><i class="bi bi-telephone-fill text-primary me-2"></i>Телефоны</h5>
+                        <p class="card-text">
+                            +7 (999) 123-45-67 — отдел продаж<br>
+                            +7 (999) 765-43-21 — служба поддержки
+                        </p>
+                        
+                        <h5 class="card-title mb-4 mt-4"><i class="bi bi-envelope-fill text-primary me-2"></i>Email</h5>
+                        <p class="card-text">
+                            info@uyut-mebel.ru — общие вопросы<br>
+                            sales@uyut-mebel.ru — оптовые продажи
+                        </p>
+                        
+                        <h5 class="card-title mb-4 mt-4"><i class="bi bi-clock-fill text-primary me-2"></i>Режим работы</h5>
+                        <p class="card-text">
+                            Пн-Пт: 9:00 - 20:00<br>
+                            Сб: 10:00 - 18:00<br>
+                            Вс: выходной
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-5">
+                        <h4 class="mb-4">Напишите нам</h4>
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Имя</label>
+                                    <input type="text" class="form-control" placeholder="Ваше имя">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" placeholder="email@example.com">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Тема</label>
+                                <select class="form-select">
+                                    <option>Вопрос о товаре</option>
+                                    <option>Доставка</option>
+                                    <option>Возврат</option>
+                                    <option>Сотрудничество</option>
+                                    <option>Другое</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Сообщение</label>
+                                <textarea class="form-control" rows="5" placeholder="Ваше сообщение..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Отправить</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card mt-4 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="mb-3">Мы на карте</h5>
+                        <div class="bg-light d-flex align-items-center justify-content-center rounded" style="height: 300px;">
+                            <div class="text-center">
+                                <i class="bi bi-map display-1 text-primary"></i>
+                                <p class="mt-2 text-muted">Интерактивная карта</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
